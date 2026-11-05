@@ -43,6 +43,16 @@ class AlumnoServiceTest {
     }
 
     @Test
+    void findAllReturnsEmptyListWhenRepositoryHasNoStudents() {
+        when(alumnoRepository.findAll()).thenReturn(List.of());
+
+        List<Alumno> result = alumnoService.findAll();
+
+        assertThat(result).isEmpty();
+        verify(alumnoRepository).findAll();
+    }
+
+    @Test
     void createSavesAndReturnsAlumnoWithNormalizedValues() {
         Alumno input = new Alumno("  Ana López  ", "  ANA@ejemplo.mx ");
         Alumno saved = alumno(1L, "Ana López", "ANA@ejemplo.mx");
