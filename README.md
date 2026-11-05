@@ -57,8 +57,10 @@ README.md
 
 ## Flujo de ramas
 
-`main` y `developer` contienen únicamente la base inicial. El trabajo posterior debe partir de `developer` en una rama con prefijo `feat/`, por ejemplo `feat/pruebas-unitarias-servicio`. No se deben realizar cambios directamente en `main` o `developer`; los cambios de funcionalidad se integran mediante una solicitud de revisión.
+`main` conserva la base inicial. `developer` contiene la funcionalidad de alumnos y sus pruebas. El trabajo posterior debe partir de `developer` en una rama con prefijo `feat/`, por ejemplo `feat/nueva-funcionalidad`, y se integra en `developer` mediante una solicitud de revisión. `main` se mantiene separada hasta que se decida publicar una versión.
 
 ## Evidencias de la práctica
 
 Guarda en `pruebas/evidencias/` las capturas de pantalla de la ejecución de las pruebas y cobertura, mostrando el comando usado, el porcentaje de líneas y ramas de `AlumnoService`, las pruebas ejecutadas y el estado final. Usa nombres claros, por ejemplo `mvn-verify-coverage.png`. El reporte HTML está en `target/site/jacoco/index.html`. Agrega las imágenes a Git junto con la rama de la práctica. No incluyas contraseñas, tokens ni otros datos sensibles en las capturas.
+
+El informe entregado de la práctica está en [`pruebas/reporte-practica-1.pdf`](pruebas/reporte-practica-1.pdf). Ese informe registra una ejecución anterior de 10 pruebas; la suite actual incluye 11 pruebas y puede verificarse con `mvn clean verify`.
