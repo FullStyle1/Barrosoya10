@@ -80,8 +80,26 @@ class AlumnoServiceTest {
     }
 
     @Test
+    void createRejectsNullName() {
+        assertThatThrownBy(() -> alumnoService.create(new Alumno(null, "ana@ejemplo.mx")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("El nombre es obligatorio");
+
+        verify(alumnoRepository, never()).save(org.mockito.ArgumentMatchers.any());
+    }
+
+    @Test
     void createRejectsBlankEmail() {
         assertThatThrownBy(() -> alumnoService.create(new Alumno("Ana López", "  ")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("El correo es obligatorio");
+
+        verify(alumnoRepository, never()).save(org.mockito.ArgumentMatchers.any());
+    }
+
+    @Test
+    void createRejectsNullEmail() {
+        assertThatThrownBy(() -> alumnoService.create(new Alumno("Ana López", null)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("El correo es obligatorio");
 

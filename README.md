@@ -27,12 +27,13 @@ mvn -version
 Desde la raíz del proyecto:
 
 ```shell
-mvn test
 mvn clean verify
 mvn spring-boot:run
 ```
 
 La aplicación inicia con H2 en memoria, sin instalar una base de datos ni Docker. Las pruebas unitarias del servicio sustituyen el repositorio con Mockito y no levantan el contexto de Spring.
+
+`mvn clean verify` ejecuta las pruebas, muestra el resumen de cobertura JaCoCo y exige al menos 90 % de cobertura de líneas y ramas en `AlumnoService`. El reporte HTML se genera en `target/site/jacoco/index.html`.
 
 ## Funcionalidad
 
@@ -60,4 +61,4 @@ README.md
 
 ## Evidencias de la práctica
 
-Guarda en `pruebas/evidencias/` las capturas de pantalla de la ejecución de las pruebas, mostrando el comando usado y el resultado completo (pruebas ejecutadas, fallidas y estado final). Usa nombres claros, por ejemplo `mvn-test-alumno-service.png`. Agrega las imágenes a Git junto con la rama de la práctica. No incluyas contraseñas, tokens ni otros datos sensibles en las capturas.
+Guarda en `pruebas/evidencias/` las capturas de pantalla de la ejecución de las pruebas y cobertura, mostrando el comando usado, el porcentaje de líneas y ramas de `AlumnoService`, las pruebas ejecutadas y el estado final. Usa nombres claros, por ejemplo `mvn-verify-coverage.png`. El reporte HTML está en `target/site/jacoco/index.html`. Agrega las imágenes a Git junto con la rama de la práctica. No incluyas contraseñas, tokens ni otros datos sensibles en las capturas.
