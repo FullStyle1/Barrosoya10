@@ -1,12 +1,13 @@
 # Barrosoya10
 
-Base de una aplicación Java con Spring Boot. Esta primera etapa configura el proyecto y sus dependencias; las entidades, el repositorio, el servicio y sus pruebas unitarias se incorporarán en una rama de funcionalidad posterior.
+Aplicación Java con Spring Boot para administrar alumnos. La capa de servicio valida y persiste registros mediante Spring Data JPA; sus pruebas unitarias usan Mockito para no iniciar Spring ni conectarse a una base de datos.
 
 ## Tecnologías
 
 - Java 21
 - Spring Boot 3.5.6
 - Maven
+- Spring Data JPA y H2 para ejecución local
 - JUnit 5, Mockito y AssertJ, incluidos en `spring-boot-starter-test`
 
 ## Requisitos
@@ -26,23 +27,32 @@ mvn -version
 Desde la raíz del proyecto:
 
 ```shell
+mvn test
 mvn clean verify
 mvn spring-boot:run
 ```
 
-La aplicación inicia con la configuración predeterminada de Spring Boot. Esta base no requiere una base de datos ni Docker.
+La aplicación inicia con H2 en memoria, sin instalar una base de datos ni Docker. Las pruebas unitarias del servicio sustituyen el repositorio con Mockito y no levantan el contexto de Spring.
 
-## Estructura inicial
+## Funcionalidad
 
 ```text
 src/
-└── main/java/mx/edu/utch/barrosoya10/
-    └── Barrosoya10Application.java
+├── main/java/mx/edu/utch/barrosoya10/
+│   ├── Barrosoya10Application.java
+│   └── alumno/
+│       ├── Alumno.java
+│       ├── AlumnoRepository.java
+│       └── AlumnoService.java
+└── test/java/mx/edu/utch/barrosoya10/alumno/
+    └── AlumnoServiceTest.java
 pruebas/
 └── evidencias/
 pom.xml
 README.md
 ```
+
+`AlumnoService` permite recuperar todos los alumnos, buscar uno por identificador y registrar alumnos nuevos. Al crear, valida nombre y correo, normaliza espacios y rechaza correos duplicados sin distinguir mayúsculas. El correo también tiene una restricción de unicidad en la entidad.
 
 ## Flujo de ramas
 
@@ -50,4 +60,4 @@ README.md
 
 ## Evidencias de la práctica
 
-Guarda en `pruebas/evidencias/` las capturas de pantalla de la ejecución de las pruebas, mostrando el comando usado y el resultado completo (pruebas ejecutadas, fallidas y estado final). Usa nombres claros, por ejemplo `mvn-test-exitoso.png`. Agrega las imágenes a Git junto con la rama de la práctica. No incluyas contraseñas, tokens ni otros datos sensibles en las capturas.
+Guarda en `pruebas/evidencias/` las capturas de pantalla de la ejecución de las pruebas, mostrando el comando usado y el resultado completo (pruebas ejecutadas, fallidas y estado final). Usa nombres claros, por ejemplo `mvn-test-alumno-service.png`. Agrega las imágenes a Git junto con la rama de la práctica. No incluyas contraseñas, tokens ni otros datos sensibles en las capturas.
