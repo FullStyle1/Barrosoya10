@@ -1,12 +1,13 @@
 # Barrosoya10
 
-Base de una aplicación Java con Spring Boot. Esta primera etapa configura el proyecto y sus dependencias; las entidades, el repositorio, el servicio y sus pruebas unitarias se incorporarán en una rama de funcionalidad posterior.
+Aplicación Java con Spring Boot para administrar alumnos. La capa de servicio valida y persiste registros mediante Spring Data JPA; sus pruebas unitarias usan Mockito para no iniciar Spring ni conectarse a una base de datos.
 
 ## Tecnologías
 
 - Java 21
 - Spring Boot 3.5.6
 - Maven
+- Spring Data JPA y H2 para ejecución local
 - JUnit 5, Mockito y AssertJ, incluidos en `spring-boot-starter-test`
 
 ## Requisitos
@@ -30,24 +31,36 @@ mvn clean verify
 mvn spring-boot:run
 ```
 
-La aplicación inicia con la configuración predeterminada de Spring Boot. Esta base no requiere una base de datos ni Docker.
+La aplicación inicia con H2 en memoria, sin instalar una base de datos ni Docker. Las pruebas unitarias del servicio sustituyen el repositorio con Mockito y no levantan el contexto de Spring.
 
-## Estructura inicial
+`mvn clean verify` ejecuta las pruebas, muestra el resumen de cobertura JaCoCo y exige al menos 90 % de cobertura de líneas y ramas en `AlumnoService`. El reporte HTML se genera en `target/site/jacoco/index.html`.
+
+## Funcionalidad
 
 ```text
 src/
-└── main/java/mx/edu/utch/barrosoya10/
-    └── Barrosoya10Application.java
+├── main/java/mx/edu/utch/barrosoya10/
+│   ├── Barrosoya10Application.java
+│   └── alumno/
+│       ├── Alumno.java
+│       ├── AlumnoRepository.java
+│       └── AlumnoService.java
+└── test/java/mx/edu/utch/barrosoya10/alumno/
+    └── AlumnoServiceTest.java
 pruebas/
 └── evidencias/
 pom.xml
 README.md
 ```
 
+`AlumnoService` permite recuperar todos los alumnos, buscar uno por identificador y registrar alumnos nuevos. Al crear, valida nombre y correo, normaliza espacios y rechaza correos duplicados sin distinguir mayúsculas. El correo también tiene una restricción de unicidad en la entidad.
+
 ## Flujo de ramas
 
-`main` y `developer` contienen únicamente la base inicial. El trabajo posterior debe partir de `developer` en una rama con prefijo `feat/`, por ejemplo `feat/pruebas-unitarias-servicio`. No se deben realizar cambios directamente en `main` o `developer`; los cambios de funcionalidad se integran mediante una solicitud de revisión.
+`main` conserva la base inicial. `developer` contiene la funcionalidad de alumnos y sus pruebas. El trabajo posterior debe partir de `developer` en una rama con prefijo `feat/`, por ejemplo `feat/nueva-funcionalidad`, y se integra en `developer` mediante una solicitud de revisión. `main` se mantiene separada hasta que se decida publicar una versión.
 
 ## Evidencias de la práctica
 
-Guarda en `pruebas/evidencias/` las capturas de pantalla de la ejecución de las pruebas, mostrando el comando usado y el resultado completo (pruebas ejecutadas, fallidas y estado final). Usa nombres claros, por ejemplo `mvn-test-exitoso.png`. Agrega las imágenes a Git junto con la rama de la práctica. No incluyas contraseñas, tokens ni otros datos sensibles en las capturas.
+Guarda en `pruebas/evidencias/` las capturas de pantalla de la ejecución de las pruebas y cobertura, mostrando el comando usado, el porcentaje de líneas y ramas de `AlumnoService`, las pruebas ejecutadas y el estado final. Usa nombres claros, por ejemplo `mvn-verify-coverage.png`. El reporte HTML está en `target/site/jacoco/index.html`. Agrega las imágenes a Git junto con la rama de la práctica. No incluyas contraseñas, tokens ni otros datos sensibles en las capturas.
+
+El informe entregado de la práctica está en [`pruebas/reporte-practica-1.pdf`](pruebas/reporte-practica-1.pdf). Ese informe registra una ejecución anterior de 10 pruebas; la suite actual incluye 11 pruebas y puede verificarse con `mvn clean verify`.
